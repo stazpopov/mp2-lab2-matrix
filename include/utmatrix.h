@@ -67,6 +67,8 @@ TVector<ValType>::TVector(int s, int si)
 template <class ValType> //конструктор копирования
 TVector<ValType>::TVector(const TVector<ValType> &v)
 {
+	size = v.size;
+	mas = new 
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType>
@@ -187,6 +189,15 @@ bool TMatrix<ValType>::operator!=(const TMatrix<ValType> &mt) const
 template <class ValType> // присваивание
 TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 {
+	if (size != mt.size)
+	{
+		delete [] pVector;
+		size = mt.size;
+		pVector = new TVector<ValType>[size];
+	}
+	for (int i = 0; i < size; i++){ pVector[i] = mt.pVector[i];}
+	StartIndex = mt.StartIndex;
+	return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сложение
